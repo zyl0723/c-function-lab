@@ -4,3 +4,5 @@ node_modules/
 server.err
 .edge-*
 .DS_Store
+.tools/
+
