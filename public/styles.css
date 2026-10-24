@@ -936,3 +936,48 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .guide-pitfall { margin-top: 7px; padding: 7px 8px; background: var(--danger-soft); border-radius: 6px; }
 .guide-pitfall > span { color: var(--danger); }
 .guide-pitfall p { margin-top: 2px; color: var(--ink-soft); font-size: 7.5px; line-height: 1.55; }
+/* Workbench readability and per-pane zoom */
+@media (min-width: 981px) {
+  .lab-workbench { grid-template-columns: minmax(420px, 0.96fr) minmax(0, 1.18fr); }
+}
+.problem-pane { padding: 14px 18px 20px; }
+.problem-pane-inner { zoom: var(--pane-zoom, 1); }
+.pane-zoom-bar {
+  position: sticky; z-index: 8; top: -14px; display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin: -2px 0 10px; padding: 6px 0 8px; background: rgba(251,249,250,0.96);
+  border-bottom: 1px solid var(--line); backdrop-filter: blur(8px);
+}
+.pane-zoom-bar > span { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 8px; }
+.zoom-buttons, .editor-zoom { display: inline-flex; align-items: center; gap: 2px; padding: 2px; border-radius: 7px; }
+.zoom-buttons { background: var(--surface-soft); border: 1px solid var(--line); }
+.zoom-buttons button, .editor-zoom button {
+  min-width: 27px; height: 24px; padding: 0 5px; border: 0; border-radius: 5px; cursor: pointer;
+  font-family: var(--font-mono); font-size: 8px;
+}
+.zoom-buttons button { color: var(--muted); background: transparent; }
+.zoom-buttons button:hover { color: var(--ink); background: var(--surface-strong); }
+.zoom-buttons .zoom-value, .editor-zoom .zoom-value { min-width: 42px; font-size: 7px; }
+.editor-zoom { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); }
+.editor-zoom button { color: rgba(240,233,236,0.48); background: transparent; }
+.editor-zoom button:hover { color: #f0e9ec; background: rgba(255,255,255,0.07); }
+.problem-top > p { font-size: 11px; line-height: 1.72; }
+.problem-meta { font-size: 8.5px; }
+.problem-origin { font-size: 8.5px; }
+.problem-section h3 { font-size: 11px; }
+.requirements-list li { font-size: 10px; }
+.problem-functions .function-chip code { font-size: 9px; }
+.test-case summary { font-size: 9.5px; }
+.test-io pre { font-size: 8.5px; }
+.function-guide summary code { font-size: 10px; }
+.function-guide summary small { font-size: 8px; }
+.guide-block p, .guide-example > p, .guide-pitfall p { font-size: 8.5px; }
+.guide-example pre { font-size: 8px; }
+.problem-details summary { font-size: 9.5px; }
+.problem-details ul { font-size: 9px; }
+@media (max-width: 760px) {
+  .problem-pane { padding: 12px 13px 18px; }
+  .pane-zoom-bar { top: -12px; }
+  .editor-toolbar { height: auto; min-height: 48px; gap: 8px; }
+  .editor-actions { flex-wrap: wrap; justify-content: flex-end; }
+  .editor-zoom { order: -1; }
+}

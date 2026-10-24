@@ -60,6 +60,7 @@ const defaultState = {
   mistakes: {},
   activity: {},
   streak: { lastDate: null, days: 0 },
+  uiZoom: { problem: 100, editor: 100 },
   xp: 0,
   dailyGoal: 3
 };
@@ -78,7 +79,8 @@ function loadState() {
       labs: saved.labs || {},
       mistakes: saved.mistakes || {},
       activity: saved.activity || {},
-      streak: { ...defaultState.streak, ...(saved.streak || {}) }
+      streak: { ...defaultState.streak, ...(saved.streak || {}) },
+      uiZoom: { ...defaultState.uiZoom, ...(saved.uiZoom || {}) }
     };
   } catch {
     return freshState();
@@ -835,10 +837,22 @@ function renderLab(id) {
   const code = record.code || exercise.starter;
   const module = moduleById.get(exercise.moduleId);
   const review = record.review;
+  const problemZoom = state.uiZoom?.problem || 100;
+  const editorZoom = state.uiZoom?.editor || 100;
+  const editorFontSize = (11.5 * editorZoom / 100).toFixed(1);
   return `
     <div class="lab-breadcrumb"><a href="#/labs">编码刷题</a>${icon('chevron', 13)}<span>${escapeHtml(exercise.tier)}</span>${icon('chevron', 13)}<span>${escapeHtml(module?.name || exercise.track)}</span></div>
     <section class="lab-workbench">
       <aside class="problem-pane">
+        <div class="pane-zoom-bar">
+          <span>${icon('book', 14)} 题目字号</span>
+          <div class="zoom-buttons">
+            <button type="button" data-action="zoom-pane" data-pane="problem" data-delta="-10" title="缩小题目文字">A−</button>
+            <button type="button" class="zoom-value" id="problem-zoom-label" data-action="zoom-pane" data-pane="problem" data-reset="true" title="恢复默认字号">${problemZoom}%</button>
+            <button type="button" data-action="zoom-pane" data-pane="problem" data-delta="10" title="放大题目文字">A+</button>
+          </div>
+        </div>
+        <div class="problem-pane-inner" style="--pane-zoom:${problemZoom / 100}; width:${(10000 / problemZoom).toFixed(2)}%">
         <div class="problem-top">
           <span class="eyebrow">${escapeHtml(exercise.levelName)} · ${escapeHtml(exercise.track)}</span>
           <div class="problem-title-row">
@@ -883,19 +897,25 @@ function renderLab(id) {
           <summary>${icon('code', 16)} 参考实现（先自己试）</summary>
           <pre><code>${escapeHtml(exercise.solution)}</code></pre>
         </details>
+        </div>
       </aside>
 
       <section class="editor-pane">
         <div class="editor-toolbar">
           <div class="editor-file"><span class="file-dot"></span><code>main.c</code><span>stdin → stdout</span></div>
           <div class="editor-actions">
+            <div class="editor-zoom" aria-label="代码字号">
+              <button type="button" data-action="zoom-pane" data-pane="editor" data-delta="-10" title="缩小代码">A−</button>
+              <button type="button" class="zoom-value" id="editor-zoom-label" data-action="zoom-pane" data-pane="editor" data-reset="true" title="恢复默认字号">${editorZoom}%</button>
+              <button type="button" data-action="zoom-pane" data-pane="editor" data-delta="10" title="放大代码">A+</button>
+            </div>
             <button class="icon-text-button" type="button" data-action="save-lab" title="保存草稿">${icon('save', 15)} <span>保存</span></button>
             <button class="icon-text-button" type="button" data-action="reset-lab" title="恢复初始代码">${icon('refresh', 15)} <span>重置</span></button>
           </div>
         </div>
         <div class="editor-shell">
-          <div class="editor-gutter" id="editor-gutter">${code.split('\n').map((_, index) => index + 1).join('\n')}</div>
-          <textarea id="code-editor" class="code-editor" spellcheck="false" aria-label="C 代码编辑器">${escapeHtml(code)}</textarea>
+          <div class="editor-gutter" id="editor-gutter" style="font-size:${editorFontSize}px">${code.split('\n').map((_, index) => index + 1).join('\n')}</div>
+          <textarea id="code-editor" class="code-editor" style="font-size:${editorFontSize}px" spellcheck="false" aria-label="C 代码编辑器">${escapeHtml(code)}</textarea>
         </div>
         <div class="editor-statusbar">
           <span id="editor-position">C11 · UTF-8</span>
@@ -1452,6 +1472,34 @@ document.addEventListener('click', (event) => {
     return;
   }
 
+  if (action === 'zoom-pane') {
+    const pane = actionElement.dataset.pane;
+    if (!['problem', 'editor'].includes(pane)) return;
+    const current = state.uiZoom?.[pane] || 100;
+    const next = actionElement.dataset.reset === 'true'
+      ? 100
+      : Math.max(80, Math.min(180, current + Number(actionElement.dataset.delta || 0)));
+    state.uiZoom = { ...defaultState.uiZoom, ...(state.uiZoom || {}), [pane]: next };
+    saveState();
+    if (pane === 'problem') {
+      const inner = document.querySelector('.problem-pane-inner');
+      if (inner) {
+        inner.style.setProperty('--pane-zoom', String(next / 100));
+        inner.style.width = `${(10000 / next).toFixed(2)}%`;
+      }
+      const label = document.getElementById('problem-zoom-label');
+      if (label) label.textContent = `${next}%`;
+    } else {
+      const editor = document.getElementById('code-editor');
+      const gutter = document.getElementById('editor-gutter');
+      const size = 11.5 * next / 100;
+      if (editor) editor.style.fontSize = `${size}px`;
+      if (gutter) gutter.style.fontSize = `${size}px`;
+      const label = document.getElementById('editor-zoom-label');
+      if (label) label.textContent = `${next}%`;
+    }
+    return;
+  }
   if (action === 'run-lab') {
     runCurrentLab();
     return;
@@ -1532,6 +1580,14 @@ async function init() {
 }
 
 init();
+
+
+
+
+
+
+
+
 
 
 
