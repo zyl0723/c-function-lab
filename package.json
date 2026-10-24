@@ -1,0 +1,15 @@
+{
+  "name": "fx-c-function-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "灰粉色 C 标准库动手刷题网站：113 个函数分类、40 道 L1–L5 编码题、PTA 代码体检与 AI 审查",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs",
+    "check": "node tests/verify-solutions.mjs && node tests/pta-smoke.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
