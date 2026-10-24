@@ -355,7 +355,7 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(200, {
       'Content-Type': mimeTypes[path.extname(filePath).toLowerCase()] || 'application/octet-stream',
       'Content-Length': stat.size,
-      'Cache-Control': pathname === '/' || pathname.endsWith('.html') ? 'no-cache' : 'public, max-age=300'
+      'Cache-Control': 'no-cache'
     });
     if (req.method === 'HEAD') return res.end();
     createReadStream(filePath).pipe(res);
@@ -371,4 +371,5 @@ server.listen(port, host, () => {
   console.log(`  编译器: ${cc}`);
   console.log(`  AI: ${process.env.AI_API_KEY ? `已配置 (${process.env.AI_MODEL})` : '未配置（可使用本地判分）'}\n`);
 });
+
 
