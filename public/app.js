@@ -852,7 +852,7 @@ function renderLab(id) {
             <button type="button" data-action="zoom-pane" data-pane="problem" data-delta="10" title="放大题目文字">A+</button>
           </div>
         </div>
-        <div class="problem-pane-inner" style="--pane-zoom:${problemZoom / 100}; width:${(10000 / problemZoom).toFixed(2)}%">
+        <div class="problem-pane-inner" style="--pane-zoom:${problemZoom / 100}">
         <div class="problem-top">
           <span class="eyebrow">${escapeHtml(exercise.levelName)} · ${escapeHtml(exercise.track)}</span>
           <div class="problem-title-row">
@@ -1485,7 +1485,7 @@ document.addEventListener('click', (event) => {
       const inner = document.querySelector('.problem-pane-inner');
       if (inner) {
         inner.style.setProperty('--pane-zoom', String(next / 100));
-        inner.style.width = `${(10000 / next).toFixed(2)}%`;
+
       }
       const label = document.getElementById('problem-zoom-label');
       if (label) label.textContent = `${next}%`;
@@ -1580,6 +1580,8 @@ async function init() {
 }
 
 init();
+
+
 
 
 

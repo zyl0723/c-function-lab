@@ -941,7 +941,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .lab-workbench { grid-template-columns: minmax(420px, 0.96fr) minmax(0, 1.18fr); }
 }
 .problem-pane { padding: 14px 18px 20px; }
-.problem-pane-inner { zoom: var(--pane-zoom, 1); }
+.problem-pane-inner { width: 100%; zoom: var(--pane-zoom, 1); }
 .pane-zoom-bar {
   position: sticky; z-index: 8; top: -14px; display: flex; align-items: center; justify-content: space-between;
   gap: 10px; margin: -2px 0 10px; padding: 6px 0 8px; background: rgba(251,249,250,0.96);
@@ -981,3 +981,4 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .editor-actions { flex-wrap: wrap; justify-content: flex-end; }
   .editor-zoom { order: -1; }
 }
+
