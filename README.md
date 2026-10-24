@@ -15,7 +15,7 @@
 ## 题目来源与署名
 
 - 原创题：函数训练、测试与参考解由本项目编写，语义依据 ISO C11 / cppreference。
-- PTA 借鉴题：错因场景来自作者 zhaoxuya520 的本地项目 `pta-c-checker`，题面、starter code 与测试重新编写。
+- PTA 借鉴题：错因场景来自[zyl0723/pta](https://github.com/zyl0723/pta) 的错因场景，题面、starter code 与测试重新编写。
 - 代码体检模块：`public/vendor/pta-checker/` 改编自同一项目，保留原文件署名。
 
 完整说明见 [ATTRIBUTIONS.md](ATTRIBUTIONS.md)。
@@ -78,3 +78,5 @@ LICENSE               MIT
 ## 安全
 
 `/api/run` 会在本机编译并执行提交的 C 代码，默认只监听 `127.0.0.1`。请只运行自己信任的代码，不要把执行服务直接暴露到公网。
+
+

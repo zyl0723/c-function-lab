@@ -783,7 +783,7 @@ function renderLabs(route) {
 
     <section class="lab-note panel">
       <span class="authority-icon">${icon('terminal', 20)}</span>
-      <div><strong>判分与署名</strong><p>公共测试通过 gcc 编译执行并逐字符比较输出；本地代码体检模块改编自 zhaoxuya520 的 pta-c-checker，来源与规则署名见项目根目录 ATTRIBUTIONS.md。</p></div>
+      <div><strong>判分与署名</strong><p>公共测试通过 gcc 编译执行并逐字符比较输出；本地代码体检模块改编自 zyl0723 的 pta-c-checker，来源与规则署名见项目根目录 ATTRIBUTIONS.md。</p></div>
     </section>
   `;
 }
@@ -917,7 +917,7 @@ function localChecks(code, problemText = '') {
     ${findings.length ? findings.map((finding) => `<div class="local-check check-${severityOf(finding.confidence)}">
       <span>${escapeHtml(finding.rule)}</span><div><strong>L${finding.line}:C${finding.col} ${escapeHtml(finding.title)}</strong><p>${escapeHtml(finding.message)}${finding.tip ? ` ${escapeHtml(finding.tip)}` : ''}</p></div>
     </div>`).join('') : `<div class="local-check check-ok"><span>${icon('check', 13)}</span><div><strong>没有命中已收录的 PTA 常见错因</strong><p>这不代表算法正确；仍需以编译和公共测试结果为准。</p></div></div>`}
-    <div class="pta-credit">体检规则改编自 zhaoxuya520 / pta-c-checker · 仅作学习辅助</div>
+    <div class="pta-credit">体检规则改编自 zyl0723 / pta-c-checker · 仅作学习辅助</div>
   </div>`;
 }
 function renderRunResult(result, exercise = null) {
@@ -1244,7 +1244,7 @@ function renderAbout() {
     <section class="panel source-panel">
       <div class="section-heading"><div><span class="eyebrow">PRIMARY REFERENCES</span><h2>权威依据与开源参考</h2><p>原创题用于训练函数语义；PTA 错因题与代码体检模块来自你本机的 pta-c-checker，并已明确署名。</p></div></div>
       <div class="source-grid">
-        <a href="vendor/pta-checker/NOTICE.md" target="_blank" rel="noreferrer"><span>${icon('code', 18)}</span><div><strong>zhaoxuya520 / pta-c-checker</strong><p>PTA 常见错因规则与逐字符输出比对，已随项目移植并署名。</p></div>${icon('external', 15)}</a>
+        <a href="https://github.com/zyl0723/pta" target="_blank" rel="noreferrer"><span>${icon('code', 18)}</span><div><strong>zyl0723 / pta-c-checker</strong><p>PTA 常见错因规则与逐字符输出比对，已随项目移植并署名。</p></div>${icon('external', 15)}</a>
         ${sources.map((source) => `<a href="${source.url}" target="_blank" rel="noreferrer"><span>${icon(source.url.includes('github') ? 'git' : 'external', 18)}</span><div><strong>${escapeHtml(source.label)}</strong><p>${escapeHtml(source.note)}</p></div>${icon('external', 15)}</a>`).join('')}
       </div>
     </section>
@@ -1493,6 +1493,8 @@ async function init() {
 }
 
 init();
+
+
 
 
 
