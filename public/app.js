@@ -7,6 +7,7 @@ import {
 } from './catalog.js';
 import { exercises as coreExercises } from './exercises.js';
 import { ptaExercises } from './pta-exercises.js';
+import { functionGuides } from './function-guides.js';
 
 const levelNames = { 1: 'L1 热身', 2: 'L2 基础', 3: 'L3 标准', 4: 'L4 进阶', 5: 'L5 综合' };
 const exercises = [...coreExercises, ...ptaExercises]
@@ -794,6 +795,37 @@ function renderLabTestCases(exercise) {
   </details>`).join('');
 }
 
+
+function renderFunctionGuides(exercise) {
+  return exercise.functions.map((name, index) => {
+    const meta = allFunctions.find((item) => item.name === name);
+    const guide = functionGuides[name] || {
+      use: `在本题中使用 ${name} 完成对应步骤；先确认参数、返回值和边界条件，再运行测试。`,
+      example: `/* 在本题的参考实现中查找 ${name} 的用法 */`,
+      result: '结合题目输入观察输出。'
+    };
+    const signature = meta?.signature || (name === 'errno' ? 'extern int errno;' : `${name}(...)`);
+    const header = meta?.header || (name === 'errno' ? '<errno.h>' : '');
+    const purpose = meta?.summary || guide.use;
+    const pitfall = meta?.pitfall || '注意参数类型、返回值与失败状态，不要只凭编译通过判断正确。';
+    const task = meta?.task || exercise.summary;
+    return `<details class="function-guide" ${index === 0 ? 'open' : ''}>
+      <summary>
+        <span class="guide-index">${String(index + 1).padStart(2, '0')}</span>
+        <div><code>${escapeHtml(name)}</code><small>${escapeHtml(purpose)}</small></div>
+        <span class="guide-toggle">用法 + 例子</span>
+      </summary>
+      <div class="guide-body">
+        <div class="guide-meta"><span>${escapeHtml(header)}</span>${meta ? `<button type="button" class="guide-link" data-action="open-function" data-function="${meta.id}">函数图鉴 #${meta.rank}</button>` : '<span>宏 / 辅助对象</span>'}</div>
+        <div class="guide-block"><span>它干什么用</span><p>${escapeHtml(purpose)}</p></div>
+        <div class="guide-block"><span>在本题里怎么用</span><p>${escapeHtml(guide.use)}</p><p class="guide-task">本题步骤：${escapeHtml(task)}</p></div>
+        <div class="guide-example"><div><span>小例子</span><code>${escapeHtml(signature)}</code></div><pre><code>${escapeHtml(guide.example)}</code></pre><p><strong>结果：</strong>${escapeHtml(guide.result)}</p></div>
+        <div class="guide-pitfall"><span>常见坑</span><p>${escapeHtml(pitfall)}</p></div>
+      </div>
+    </details>`;
+  }).join('');
+}
+
 function renderLab(id) {
   const exercise = exerciseById.get(id);
   if (!exercise) {
@@ -831,6 +863,13 @@ function renderLab(id) {
             const item = allFunctions.find((entry) => entry.name === name);
             return item ? `<button type="button" class="function-chip" data-action="open-function" data-function="${item.id}"><code>${name}</code><small>#${item.rank}</small></button>` : `<span class="function-chip"><code>${name}</code></span>`;
           }).join('')}</div>
+        </div>
+        <div class="problem-section function-guide-section">
+          <div class="guide-section-head">
+            <div><h3>本题函数精讲</h3><p>逐个看用途、怎么用、完整小例子和常见坑。</p></div>
+            <span class="soft-label">${exercise.functions.length} 个接口</span>
+          </div>
+          <div class="function-guide-list">${renderFunctionGuides(exercise)}</div>
         </div>
         <div class="problem-section">
           <h3>公共测试</h3>
@@ -1493,6 +1532,9 @@ async function init() {
 }
 
 init();
+
+
+
 
 
 

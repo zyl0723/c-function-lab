@@ -906,3 +906,33 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .level-heading { align-items: flex-start; flex-direction: column; gap: 7px; }
   .level-heading .soft-label { align-self: flex-start; }
 }
+.guide-section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
+.guide-section-head p { margin-top: 3px; color: var(--muted); font-size: 8px; }
+.function-guide-list { display: flex; flex-direction: column; gap: 6px; }
+.function-guide { background: var(--surface-soft); border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
+.function-guide[open] { background: var(--surface-strong); border-color: var(--pink-soft); box-shadow: 0 5px 14px rgba(55,39,48,0.04); }
+.function-guide summary { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; align-items: center; gap: 7px; padding: 9px 10px; cursor: pointer; list-style: none; }
+.function-guide summary::-webkit-details-marker { display: none; }
+.guide-index { display: grid; width: 20px; height: 20px; place-items: center; color: var(--pink-dark); background: var(--pink-pale); border-radius: 6px; font-family: var(--font-mono); font-size: 6.5px; }
+.function-guide summary > div { display: flex; flex-direction: column; min-width: 0; }
+.function-guide summary code { color: var(--ink); font-size: 9px; font-weight: 650; }
+.function-guide summary small { margin-top: 1px; color: var(--muted); font-size: 7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.guide-toggle { color: var(--pink-dark); font-size: 6.5px; white-space: nowrap; }
+.function-guide[open] .guide-toggle { color: var(--muted); }
+.guide-body { padding: 2px 10px 11px 39px; }
+.guide-meta { display: flex; align-items: center; gap: 7px; padding: 5px 0 7px; color: var(--muted-light); border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 6.5px; }
+.guide-link { margin-left: auto; padding: 2px 5px; color: var(--pink-dark); background: var(--pink-pale); border: 0; border-radius: 4px; font-family: var(--font-sans); font-size: 6.5px; cursor: pointer; }
+.guide-block { padding: 6px 0; border-top: 1px solid var(--line); }
+.guide-block > span, .guide-example > div > span, .guide-pitfall > span { color: var(--pink-dark); font-size: 7px; font-weight: 650; }
+.guide-block p { margin-top: 3px; color: var(--ink-soft); font-size: 8px; line-height: 1.6; }
+.guide-block .guide-task { color: var(--muted); font-size: 7.5px; }
+.guide-example { margin-top: 4px; padding: 8px; background: var(--sidebar); border-radius: 7px; }
+.guide-example > div { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
+.guide-example > div > span { color: var(--pink-soft); }
+.guide-example > div > code { color: rgba(240,233,236,0.35); font-size: 6px; overflow-wrap: anywhere; }
+.guide-example pre { margin-top: 6px; padding: 7px; color: #ecdfe5; background: rgba(0,0,0,0.15); border-radius: 5px; font-size: 7px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.guide-example > p { margin-top: 6px; color: rgba(240,233,236,0.42); font-size: 7px; line-height: 1.5; }
+.guide-example > p strong { color: rgba(240,233,236,0.65); }
+.guide-pitfall { margin-top: 7px; padding: 7px 8px; background: var(--danger-soft); border-radius: 6px; }
+.guide-pitfall > span { color: var(--danger); }
+.guide-pitfall p { margin-top: 2px; color: var(--ink-soft); font-size: 7.5px; line-height: 1.55; }
